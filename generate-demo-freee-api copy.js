@@ -4,7 +4,8 @@ const { CodeGenerator } = require("@himenon/openapi-typescript-code-generator");
 const Templates = require("@himenon/openapi-typescript-code-generator/templates");
 
 const main = () => {
-  const codeGenerator = new CodeGenerator("./demo4/openapi.yml");
+  // https://raw.githubusercontent.com/freee/freee-api-schema/master/v2020_06_15/open-api-3/api-schema.yml
+  const codeGenerator = new CodeGenerator("./demo-freee-api/openapi.yml");
 
   const apiClientGeneratorTemplate = {
     generator: Templates.ApiClient.generator,
@@ -13,21 +14,16 @@ const main = () => {
     },
   };
 
-  const typeDefCode = codeGenerator.generateTypeDefinition();
-  const apiClientCode = codeGenerator.generateCode([
-    {
-      generator: () => {
-        return [`import { Schemas, Responses } from "./types";`];
-      },
-    },
+  const code = codeGenerator.generateTypeDefinition([
     codeGenerator.getAdditionalTypeDefinitionCustomCodeGenerator(),
     apiClientGeneratorTemplate,
   ]);
 
-  fs.writeFileSync("demo4/types.ts", typeDefCode, { encoding: "utf-8" });
-  fs.writeFileSync("demo4/apiClient.ts", apiClientCode, { encoding: "utf-8" });
+  fs.writeFileSync("demo-freee-api/client.ts", code, { encoding: "utf-8" });
 
-  console.log("Generate demo4");
+  console.log("Generate demo-freee-api");
 };
 
 main();
+
+https://raw.githubusercontent.com/argoproj/argo-rollouts/master/pkg/apiclient/rollout/rollout.swagger.json
