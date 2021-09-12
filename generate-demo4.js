@@ -8,7 +8,9 @@ const main = () => {
 
   const apiClientGeneratorTemplate = {
     generator: Templates.ApiClient.generator,
-    option: {},
+    option: {
+      additionalMethodComment: true
+    },
   };
 
   const typeDefCode = codeGenerator.generateTypeDefinition();
